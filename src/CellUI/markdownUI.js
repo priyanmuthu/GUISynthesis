@@ -46,6 +46,7 @@ class markdownUI extends UI {
         var cellInput = document.createElement('textarea');
         cellInput.classList.add('form-control');
         cellInput.rows = 2;
+        cellInput.style.fontSize = constants.fontSize;
         cellInput.style.resize = 'vertical';
         var heightLimit = 60;
         cellInput.style.minHeight = heightLimit + 'px';

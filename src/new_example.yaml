@@ -1,0 +1,135 @@
+cellArray:
+  - cellInput: ffmpeg -i input.mp4
+    rawText: ffmpeg -i input.mp4
+    renderObject:
+      - command: ffmpeg
+        raw: ffmpeg -i input.mp4
+        params:
+          - parameter: '-i'
+            type: file
+            extensions:
+              - mp4
+            default: input.mp4
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      var valStr = paramEdit.value;
+                      return (valStr.includes(' ')) ? '"' + valStr + '"' : valStr;
+                  }
+    UIVisible: true
+    cellType: 0
+  - cellInput: >-
+      ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy -ss
+      00:02:20 -t 00:04:00 output.mp4
+    rawText: >-
+      ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy -ss
+      00:02:20 -t 00:04:00 output.mp4
+    renderObject:
+      - command: ffmpeg
+        raw: >-
+          ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy
+          -ss 00:02:20 -t 00:04:00 output.mp4
+        params:
+          - parameter: '-i'
+            type: file
+            extensions:
+              - mp4
+            default: /Users/priyan/UCSD/Research/GUISynthesis/video.mp4
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      var valStr = paramEdit.value;
+                      return (valStr.includes(' ')) ? '"' + valStr + '"' : valStr;
+                  }
+          - parameter: '-c'
+            type: dropdown
+            value:
+              - copy
+            default: copy
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return dInput.value;
+                  }
+          - parameter: '-ss'
+            type: time
+            default: '00:02:20'
+            required: true
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                          return hourInput.value + ":" + minInput.value + ":" + secInput.value;
+                      }
+          - parameter: '-t'
+            type: time
+            default: '00:04:00'
+            required: true
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                          return hourInput.value + ":" + minInput.value + ":" + secInput.value;
+                      }
+          - parameter: ''
+            type: file
+            default: output.mp4
+            required: true
+            isinclude: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      return paramCheck.checked;
+                  }
+            eval: !<tag:yaml.org,2002:js/function> |-
+              function () {
+                      var valStr = paramEdit.value;
+                      return (valStr.includes(' ')) ? '"' + valStr + '"' : valStr;
+                  }
+    UIVisible: true
+    cellType: 0
+commandObjs:
+  ffmpeg:
+    - command: ffmpeg
+      raw: ffmpeg -i input.mp4
+      params:
+        - parameter: '-i'
+          type: file
+          default: input.mp4
+          required: true
+    - command: ffmpeg
+      raw: >-
+        ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy -ss
+        00:02:20 -t 00:04:00 output.mp4
+      params:
+        - parameter: '-i'
+          type: file
+          default: /Users/priyan/UCSD/Research/GUISynthesis/video.mp4
+          required: true
+        - parameter: '-c'
+          type: string
+          default: copy
+          required: true
+        - parameter: '-ss'
+          type: time
+          default: '00:02:20'
+          required: true
+        - parameter: '-t'
+          type: time
+          default: '00:04:00'
+          required: true
+        - parameter: ''
+          type: file
+          default: output.mp4
+          required: true

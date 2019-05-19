@@ -47,6 +47,7 @@ class rawScriptUI extends UI {
         cellInput.classList.add('form-control');
         cellInput.rows = 2;
         cellInput.style.resize = 'vertical';
+        cellInput.style.fontSize = constants.fontSize;
         var heightLimit = 60;
         cellInput.style.minHeight = heightLimit + 'px';
         cellInput.oninput = function () {

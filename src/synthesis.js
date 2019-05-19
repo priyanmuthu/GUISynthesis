@@ -325,7 +325,7 @@ function getType(value) {
     const filePattern = /^([.]{0,2}\/)*([A-z0-9-_+]+\/)*([A-z0-9-_]+\.[a-zA-Z0-9]{2,})$/;
     const folderPattern = /^([.]{0,2}\/)*([A-z0-9-_+]+\/)+([A-z0-9-_]+)*$/;
     const timerPattern = /^([0-9]{2}:){2}([0-9]{2})$/;
-    const numberPattern = /^([0-9]*).?([0-9]+)$/;
+    const numberPattern = /^(-?[0-9]*).?([0-9]+)$/;
     if (numberPattern.test(value)) {
         return constants.yamlTypes.number;
     }

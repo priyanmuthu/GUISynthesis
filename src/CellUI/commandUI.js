@@ -53,6 +53,7 @@ class commandUI extends UI {
         var cellInput = document.createElement('input');
         cellInput.classList.add('form-control');
         cellInput.type = 'text';
+        cellInput.style.fontSize = constants.fontSize;
         var heightLimit = 60;
         cellInput.style.minHeight = heightLimit + 'px';
         inputInnerDiv.appendChild(cellInput);

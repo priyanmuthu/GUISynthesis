@@ -233,6 +233,7 @@ function renderStringParam(param, callBacks) {
     pDiv.appendChild(paramName);
 
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'text';
     paramEdit.id = 'input_param_' + stringCount;
@@ -277,6 +278,7 @@ function renderNumberParam(param, callBacks) {
     pDiv.appendChild(inputDiv);
 
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'number';
     paramEdit.step = 'any';
@@ -343,7 +345,7 @@ function renderTimeParam(param, callBacks) {
     pDiv.appendChild(createRightDiv(param, callBacks));
 
     pDiv.appendChild(paramName);
-    pDiv.insertAdjacentHTML('beforeend', '<br/>');
+    // pDiv.insertAdjacentHTML('beforeend', '<br/>');
 
     var defaultVal = null;
     if (constants.yamlStrings.defaultValue in param) {
@@ -371,6 +373,7 @@ function renderBooleanParam(param, callBacks) {
     pDiv.appendChild(topDiv);
 
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-check-input');
     paramEdit.type = 'checkbox';
     paramEdit.id = 'input_param_' + stringCount;
@@ -413,6 +416,7 @@ function renderDropdownParam(param, callBacks) {
 
     //input
     var dInput = document.createElement('input');
+    dInput.style.fontSize = constants.fontSize;
     dInput.id = "dropdown_" + dropdownCount;
     dropdownCount += 1;
     dInput.type = "text";
@@ -467,6 +471,7 @@ function renderArrayParam(param, callBacks) {
 
     //input
     var dInput = document.createElement('input');
+    dInput.style.fontSize = constants.fontSize;
     dInput.id = "dropdown_" + dropdownCount;
     dropdownCount += 1;
     dInput.type = "text";
@@ -517,6 +522,7 @@ function renderFileDialog(param, scriptUI) {
     pDiv.appendChild(inputDiv);
     //input
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'text';
     paramEdit.id = 'file_input_' + fileDialogCount;
@@ -703,6 +709,7 @@ function renderArrayFileDialog(param, callBacks) {
     pDiv.appendChild(inputDiv);
     //input
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'text';
     paramEdit.id = 'file_input_' + fileDialogCount;
@@ -778,6 +785,7 @@ function renderFolderDialog(param, callBacks) {
     pDiv.appendChild(inputDiv);
     //input
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'text';
     paramEdit.id = 'file_input_' + folderDialogCount;
@@ -863,7 +871,7 @@ function createTypeSettingModal(param, callBacks) {
     var modalBodyDiv = modalRes.modalBodyDiv;
     //Create the body here, as a form input
     var settingDiv = document.createElement('div');
-    settingDiv.style.margin = '20px';
+    settingDiv.style.margin = constants.fontSize;
     modalBodyDiv.appendChild(settingDiv);
     var labelName = document.createElement('h3');
     labelName.innerText = 'Parameter: ' + param[constants.yamlStrings.parameterName];
@@ -880,6 +888,7 @@ function createTypeSettingModal(param, callBacks) {
     defaultValueDiv.appendChild(defaultValLabel);
 
     var paramEdit = document.createElement('input');
+    paramEdit.style.fontSize = constants.fontSize;
     paramEdit.classList.add('form-control');
     paramEdit.type = 'text';
     if (constants.yamlStrings.defaultValue in param) {
@@ -1108,7 +1117,7 @@ function createTypeDropdown(param) {
     dropdownDiv.classList.add('dropdown');
     dropdownDiv.style.cssFloat = 'left';
     dropdownDiv.style.color = '#000000';
-    dropdownDiv.style.marginRight = '20px';
+    dropdownDiv.style.marginRight = constants.fontSize;
     var ddButton = document.createElement('span');
     // ddButton.classList.add('btn');
     // ddButton.classList.add('btn-default');
@@ -1199,6 +1208,7 @@ function createTimerInput(timer_id, defaultVal) {
 
 function createTimeInput(timerType, maxVal) {
     var timerInput = document.createElement('input');
+    timerInput.style.fontSize = constants.fontSize;
     timerInput.classList.add('form-control');
     timerInput.classList.add('timer-input');
     timerInput.type = "number";

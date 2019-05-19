@@ -79,7 +79,8 @@ const textFiles = {
     'md': 'markdown',
     'js': 'javascript',
     'xml': 'xml',
-    'html': 'html'
+    'html': 'html',
+    'fastq': 'text'
 };
 
 const videoFiles = {
@@ -105,6 +106,8 @@ const trackedFile = null;
 const enableInteractiveTerminal = true;
 
 const theme = 'light';
+
+const fontSize = '24px';
 
 module.exports = {
     theme: theme,

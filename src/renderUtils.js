@@ -83,8 +83,9 @@ function createLabel(param) {
     var labelDiv = document.createElement('div');
     // labelDiv.classList.add('form-inline');
     var paramName = document.createElement('label');
-    paramName.style.width = '100%';
+    // paramName.style.width = '100%';
     paramName.style.display = 'inline-block';
+    paramName.style.fontSize = '20px';
     paramName.insertAdjacentHTML('beforeend', param[constants.yamlStrings.parameterName]);
     paramName.setAttribute('contenteditable', true);
     paramName.addEventListener('keyup', (ev) => {
