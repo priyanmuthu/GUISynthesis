@@ -162,6 +162,10 @@ module.exports.onChange = (object, onChange) => {
     return new Proxy(object, handler);
 };
 
+function subCommandTest(subCommand){
+    return /^[a-zA-Z]+$/.test(subCommand);
+}
+
 module.exports.readFileText = readFileText;
 module.exports.getYAMLObject = getYAMLObject;
 module.exports.getYAMLText = getYAMLText;
@@ -176,3 +180,4 @@ module.exports.paramCopy = paramCopy;
 module.exports.RunCommandAsProcessAsync = RunCommandAsProcessAsync;
 module.exports.RunCommandAsProcessSync = RunCommandAsProcessSync;
 module.exports.ExtractManPageInfo = ExtractManPageInfo;
+module.exports.subCommandTest = subCommandTest;

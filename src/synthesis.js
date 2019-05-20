@@ -26,12 +26,12 @@ function parseArgs(commandStr) {
         for (var i = 1; i < argvArr.length; i++) {
             var arg = argvArr[i];
             // if the arg is present in positional array, add it to params
-            if (cObj['_'].indexOf(arg) > -1) {
-                // if (i == 1) {
-                //     cYAMLObj[constants.yamlStrings.commandName] = commandName + ' ' + arg;
-                //     cObj['_'].splice(cObj['_'].indexOf(arg), 1);
-                //     continue;
-                // }
+            if (cObj['_'].indexOf(arg) > -1 && utils.subCommandTest(arg)) {
+                if (i == 1) { // Sub-command
+                    cYAMLObj[constants.yamlStrings.subCommand] = arg;
+                    cObj['_'].splice(cObj['_'].indexOf(arg), 1);
+                    continue; // enable this after fixing
+                }
                 //Redirecting terminal output
                 if (constants.terminalOutput.indexOf(arg) > -1 && i + 1 < argvArr.length) {
                     var val = argvArr[i + 1];

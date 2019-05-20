@@ -1,5 +1,6 @@
 const yamlStrings = {
     'commandName': 'command',
+    'subCommand': 'subCommand',
     'parameterArray': 'params',
     'parameterType': 'type',
     'markdown': 'md',

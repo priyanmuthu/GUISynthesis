@@ -96,7 +96,11 @@ function renderCommandUI(command, callBacks = null) {
     var commandUIDiv = document.createElement("div");
 
     commandHeading = document.createElement('h3');
-    commandHeading.innerHTML = commandHeading.innerHTML + "<b>Command:</b> " + command[constants.yamlStrings.commandName];
+    let comStr = `<b>${command[constants.yamlStrings.commandName]}</b>`;
+    if(constants.yamlStrings.subCommand in command){
+        comStr += " " + command[constants.yamlStrings.subCommand];
+    }
+    commandHeading.innerHTML = commandHeading.innerHTML + comStr;
     commandUIDiv.appendChild(commandHeading);
 
     var mainParamDiv = document.createElement('div');
@@ -368,27 +372,32 @@ function renderBooleanParam(param, callBacks) {
     pDiv.classList.add('form-group');
     var topDiv = document.createElement('div');
     topDiv.classList.add('clearfix');
-    topDiv.insertAdjacentHTML('beforeend', '<br/>');
-    topDiv.appendChild(createRightDiv(param, callBacks));
-    pDiv.appendChild(topDiv);
-
-    var paramEdit = document.createElement('input');
-    paramEdit.style.fontSize = constants.fontSize;
-    paramEdit.classList.add('form-check-input');
-    paramEdit.type = 'checkbox';
-    paramEdit.id = 'input_param_' + stringCount;
-    if (constants.yamlStrings.defaultValue in param) {
-        paramEdit.checked = param[constants.yamlStrings.defaultValue];
-    }
-    pDiv.appendChild(paramEdit);
-
+    // topDiv.insertAdjacentHTML('beforeend', '<br/>');
     var paramName = renderUtils.createLabel(param);
     paramName.style.marginLeft = "10px";
     paramName.style.fontSize = "16px";
+    topDiv.appendChild(createRightDiv(param, callBacks));
+    pDiv.appendChild(topDiv);
     pDiv.appendChild(paramName);
+    
+    // var paramEdit = document.createElement('input');
+    // paramEdit.style.fontSize = constants.fontSize;
+    // paramEdit.classList.add('form-check-input');
+    // paramEdit.type = 'checkbox';
+    // paramEdit.id = 'input_param_' + stringCount;
+    // if (constants.yamlStrings.defaultValue in param) {
+    //     paramEdit.checked = param[constants.yamlStrings.defaultValue];
+    // }
+    // pDiv.appendChild(paramEdit);
+
+    // var paramName = renderUtils.createLabel(param);
+    // paramName.style.marginLeft = "10px";
+    // paramName.style.fontSize = "16px";
+    // pDiv.appendChild(paramName);
 
     param[constants.yamlStrings.evaluate] = function () {
-        return paramEdit.checked;
+        // return paramEdit.checked;
+        return true;
     }
 
     return pDiv;
@@ -1331,6 +1340,9 @@ function getCommandString(command) {
 
     //command name:
     commandString += command[constants.yamlStrings.commandName];
+    if(constants.yamlStrings.subCommand in command){
+        commandString += " " + command[constants.yamlStrings.subCommand];
+    }
     commandString += " ";
 
     //add params
@@ -1382,7 +1394,7 @@ function getCommandString(command) {
 function runScript(script) {
     var scriptString = getScriptString(script);
     console.log(scriptString);
-    require('./terminal.js').runCommand(scriptString);
+    // require('./terminal.js').runCommand(scriptString);
 }
 
 function runCommand(command) {
