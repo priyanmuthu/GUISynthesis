@@ -11,6 +11,7 @@ const commandUI = require('./CellUI/commandUI.js').commandUI;
 const constants = require('./constants.js');
 var cellArray = [];
 var cellDict = {};
+var tabDict = {};
 
 $(document).ready(() => {
     // Do this before anything else
@@ -31,6 +32,7 @@ $(document).ready(() => {
     initCollapseUI();
 
     $("#addCellButton").click(() => {
+        // addTab('git');
         addCell();
     });
 
@@ -184,7 +186,7 @@ function loadState() {
 
 function addCell(state = null) {
     var formDiv = document.getElementById('formDiv');
-    var newCell = new celljs.cell(deleteCell);
+    var newCell = new celljs.cell(deleteCell, replaceCell);
     if (state !== undefined && state !== null) { newCell.loadState(state); }
     cellArray.push(newCell);
     let cellUI = newCell.getUI();
@@ -193,7 +195,46 @@ function addCell(state = null) {
     formDiv.appendChild(cellUI);
     cellDict[uid] = newCell;
     $('.selectpicker').selectpicker();
+}
 
+function addCellToTab(commandName, state = null) {
+    addTab(commandName);
+    var tabDiv = tabDict[commandName]
+    console.log(tabDict);
+    var newCell = new celljs.cell(deleteCell, replaceCell, commandName);
+    if (state !== undefined && state !== null) { newCell.loadState(state); }
+    cellArray.push(newCell);
+    let cellUI = newCell.getUI();
+    let uid = utils.getUniqueID();
+    cellUI.id = uid;
+    tabDiv.appendChild(cellUI);
+    cellDict[uid] = newCell;
+    $('.selectpicker').selectpicker();
+}
+
+function replaceCell(oldCommandName, cellElement, newCommandName, commandStr) {
+    //delete from old tab -> put it to new tab
+    deleteCell(cellElement, oldCommandName);
+    let newState = {}
+    newState[constants.stateStrings.cellType] = constants.cellType.command;
+    newState[constants.stateStrings.rawText] = commandStr;
+    newState[constants.stateStrings.cellInput] = commandStr;
+    newState[constants.stateStrings.UIVisible] = true;
+
+    addCellToTab(newCommandName, newState);
+    openTab(getTabID(newCommandName), getTabButtonID(newCommandName));
+}
+
+function deleteCell(cellElement, commandName) {
+    console.log('delete cell');
+    let cellDiv = document.getElementById('formDiv');
+    if (commandName !== null) {
+        cellDiv = tabDict[commandName];
+    }
+    var idx = cellArray.indexOf(cellElement);
+    if (idx !== -1) { cellArray.splice(idx, 1); }
+    console.log(cellElement);
+    cellDiv.removeChild(cellElement);
 }
 
 function clearNotebook() {
@@ -202,11 +243,7 @@ function clearNotebook() {
     cellArray = [];
 }
 
-function deleteCell(cellElement) {
-    var idx = cellArray.indexOf(cellElement);
-    if (idx !== -1) { cellArray.splice(idx, 1); }
-    formDiv.removeChild(cellElement);
-}
+
 
 
 function initDynamicResize(terminal) {
@@ -269,4 +306,54 @@ function toggleCollapsePane() {
     else if (disp == 'none') {
         uncollapsePane();
     }
+}
+
+function addTab(commandName) {
+    let tabID = getTabID(commandName);
+    let tabButtonID = getTabButtonID(commandName);
+    if (commandName in tabDict) { return; }
+    // Add tab div
+    let tabParentDiv = document.getElementById('tabParentDiv');
+    let newTabDiv = document.createElement('div');
+    newTabDiv.id = tabID;
+    newTabDiv.classList.add('tabcontent');
+    tabParentDiv.appendChild(newTabDiv);
+
+    // Add tab button
+    let tabButtonDiv = document.getElementById('tabButtonDiv');
+    let newTabButton = document.createElement('button');
+    newTabButton.id = tabButtonID;
+    newTabButton.classList.add('tablinks');
+    newTabButton.addEventListener('click', (ev) => {
+        openTab(tabID, tabButtonID);
+    });
+    newTabButton.innerHTML = `<b>${commandName}</b>`;
+    tabButtonDiv.appendChild(newTabButton);
+
+    tabDict[commandName] = newTabDiv;
+}
+
+function getTabID(commandName) {
+    return `${commandName}Tab`;
+}
+
+function getTabButtonID(commandName) {
+    return `${commandName}TabButton`;
+}
+
+function openTab(tabID, tabButtonID) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    console.log(tabID);
+    document.getElementById(tabID).style.display = "block";
+    let tabButton = document.getElementById(tabButtonID);
+    tabButton.classList.add('active');
+    // evt.currentTarget.className += " active";
 }

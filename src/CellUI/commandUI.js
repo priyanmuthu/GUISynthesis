@@ -162,6 +162,13 @@ class commandUI extends UI {
 
     showGUI(rawText) {
         if (rawText === "") { return; }
+        
+        // Check for command tabs
+        let commandName = synthesis.getCommandName(rawText);
+        if(commandName !== this.cell.commandName){
+            this.replace(commandName, rawText);
+        }
+        
         // Generate GUI
         if (this.rawText !== rawText) {
             this.addScript(rawText);

@@ -28,6 +28,10 @@ class UI {
         this.cell.delete();
     }
 
+    replace(commandName, commandStr) {
+        this.cell.replace(commandName, commandStr);
+    }
+
     getState() {
         // Proxy for an abstract method
         throw new Error('You have to implement the method in the extended class!');

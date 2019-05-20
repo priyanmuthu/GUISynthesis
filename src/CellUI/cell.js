@@ -4,12 +4,14 @@ const rawScriptUI = require('./rawScriptUI.js').rawScriptUI;
 const markdownUI = require('./markdownUI.js').markdownUI;
 
 class cell {
-    constructor(deleteCell) {
+    constructor(deleteCell, replaceCell = null, commandName = null) {
         this.deleteCell = deleteCell;
+        this.commandName = commandName;
+        this.replaceCell = replaceCell;
         this.cDiv = document.createElement('div');
         this.cDiv.style.marginTop = '20px';
         this.cDiv.style.marginBottom = '20px';
-        if(constants.enableDraggable){
+        if (constants.enableDraggable) {
             this.cDiv.classList.add('list-group-item');
             this.cDiv.classList.add('cell-list');
         }
@@ -47,7 +49,12 @@ class cell {
     }
 
     delete() {
-        this.deleteCell(this.cDiv);
+        this.deleteCell(this.cDiv, this.commandName);
+    }
+
+    replace(commandName, commandStr) {
+        if (this.replaceCell === null) { return; }
+        this.replaceCell(this.commandName, this.cDiv, commandName, commandStr);
     }
 
     getState() {
