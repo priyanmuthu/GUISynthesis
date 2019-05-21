@@ -26,8 +26,8 @@ function parseArgs(commandStr) {
         for (var i = 1; i < argvArr.length; i++) {
             var arg = argvArr[i];
             // if the arg is present in positional array, add it to params
-            if (cObj['_'].indexOf(arg) > -1 && utils.subCommandTest(arg)) {
-                if (i == 1) { // Sub-command
+            if (cObj['_'].indexOf(arg) > -1) {
+                if (i == 1 && utils.subCommandTest(arg)) { // Sub-command
                     cYAMLObj[constants.yamlStrings.subCommand] = arg;
                     cObj['_'].splice(cObj['_'].indexOf(arg), 1);
                     continue; // enable this after fixing
