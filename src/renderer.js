@@ -107,7 +107,7 @@ function renderCommandUI(command, callBacks = null) {
     mainParamDiv.id = 'mainParamDiv';
     mainParamDiv.classList.add('grid-form')
 
-    renderParamUI(mainParamDiv, command[constants.yamlStrings.parameterArray], callBacks);
+    renderParamUI(mainParamDiv, command[constants.yamlStrings.parameterArray], callBacks, command[constants.yamlStrings.commandName]);
     commandUIDiv.appendChild(mainParamDiv);
     return commandUIDiv;
 }
@@ -159,7 +159,7 @@ function renderRawScript(rawScript, rawScriptUI) {
     return pDiv;
 }
 
-function renderParamUI(mainParamDiv, params, callBacks) {
+function renderParamUI(mainParamDiv, params, callBacks, commandName) {
     var paramCount = params.length;
     for (var i = 0; i < paramCount; i++) {
         param = params[i];
@@ -173,31 +173,31 @@ function renderParamUI(mainParamDiv, params, callBacks) {
 
         switch (param[constants.yamlStrings.parameterType]) {
             case constants.yamlTypes.number:
-                pDiv = renderNumberParam(param, callBacks);
+                pDiv = renderNumberParam(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.time:
-                pDiv = renderTimeParam(param, callBacks);
+                pDiv = renderTimeParam(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.boolean:
-                pDiv = renderBooleanParam(param, callBacks);
+                pDiv = renderBooleanParam(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.dropdown:
-                pDiv = renderDropdownParam(param, callBacks);
+                pDiv = renderDropdownParam(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.file:
-                pDiv = renderFileDialog(param, callBacks);
+                pDiv = renderFileDialog(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.folder:
-                pDiv = renderFolderDialog(param, callBacks);
+                pDiv = renderFolderDialog(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.array:
-                pDiv = renderArrayParam(param, callBacks);
+                pDiv = renderArrayParam(param, callBacks, commandName);
                 break;
             case constants.yamlTypes.arrayFiles:
-                pDiv = renderArrayFileDialog(param, callBacks);
+                pDiv = renderArrayFileDialog(param, callBacks, commandName);
                 break;
             default:
-                pDiv = renderStringParam(param, callBacks);
+                pDiv = renderStringParam(param, callBacks, commandName);
                 break;
         }
 
@@ -225,14 +225,14 @@ function renderParamUI(mainParamDiv, params, callBacks) {
     }
 }
 
-function renderStringParam(param, callBacks) {
+function renderStringParam(param, callBacks, commandName) {
     //Render the param UI
     var pDiv = document.createElement('div')
     pDiv.id = 'param_string_' + stringCount;
     stringCount += 1;
     pDiv.classList.add('form-group');
 
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     pDiv.appendChild(createRightDiv(param, callBacks));
     pDiv.appendChild(paramName);
 
@@ -266,14 +266,14 @@ function isQuoted(str) {
     return false;
 }
 
-function renderNumberParam(param, callBacks) {
+function renderNumberParam(param, callBacks, commandName) {
     //Render the param UI
     var pDiv = document.createElement('div')
     pDiv.id = 'param_string_' + numberCount;
     numberCount += 1;
     pDiv.classList.add('form-group');
 
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     pDiv.appendChild(createRightDiv(param, callBacks));
     pDiv.appendChild(paramName);
 
@@ -338,14 +338,14 @@ function renderMarkdown(param, callBacks) {
     return pDiv;
 }
 
-function renderTimeParam(param, callBacks) {
+function renderTimeParam(param, callBacks, commandName) {
     //Render the param UI
     var pDiv = document.createElement('div')
     pDiv.id = 'param_time_' + timeCount;
     timeCount = timeCount + 1;
     pDiv.classList.add('form-group');
 
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     pDiv.appendChild(createRightDiv(param, callBacks));
 
     pDiv.appendChild(paramName);
@@ -364,7 +364,7 @@ function renderTimeParam(param, callBacks) {
     return pDiv;
 }
 
-function renderBooleanParam(param, callBacks) {
+function renderBooleanParam(param, callBacks, commandName) {
     //Render the param UI
     var pDiv = document.createElement('div')
     pDiv.id = 'param_bool_' + booleanCount;
@@ -373,7 +373,7 @@ function renderBooleanParam(param, callBacks) {
     var topDiv = document.createElement('div');
     topDiv.classList.add('clearfix');
     // topDiv.insertAdjacentHTML('beforeend', '<br/>');
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     paramName.style.marginLeft = "10px";
     paramName.style.fontSize = "16px";
     topDiv.appendChild(createRightDiv(param, callBacks));
@@ -403,14 +403,14 @@ function renderBooleanParam(param, callBacks) {
     return pDiv;
 }
 
-function renderDropdownParam(param, callBacks) {
+function renderDropdownParam(param, callBacks, commandName) {
     //Render the param UI
 
     var pDiv = document.createElement('div');
     // pDiv.style.color = "#000000";
 
     // label
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     // paramName.style.color = "#ffffff";
     paramName.style.width = '100%';
 
@@ -459,14 +459,14 @@ function renderDropdownParam(param, callBacks) {
     return pDiv;
 }
 
-function renderArrayParam(param, callBacks) {
+function renderArrayParam(param, callBacks, commandName) {
     //Render the param UI
 
     var pDiv = document.createElement('div');
     pDiv.style.color = "#000000";
 
     // label
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     paramName.style.color = "#ffffff";
     paramName.style.width = '100%';
 
@@ -513,7 +513,7 @@ function renderArrayParam(param, callBacks) {
     return pDiv;
 }
 
-function renderFileDialog(param, scriptUI) {
+function renderFileDialog(param, scriptUI, commandName) {
     var pDiv = document.createElement('div');
     pDiv.id = "file_div_" + fileDialogCount;
     fileDialogCount += 1;
@@ -521,7 +521,7 @@ function renderFileDialog(param, scriptUI) {
     pDiv.classList.add('form-group');
 
     // label
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     pDiv.appendChild(createRightDiv(param, scriptUI));
     pDiv.appendChild(paramName);
 
@@ -700,7 +700,7 @@ function showTextFiles(filePath, holderDiv, fileLang) {
     return;
 }
 
-function renderArrayFileDialog(param, callBacks) {
+function renderArrayFileDialog(param, callBacks, commandName) {
     var pDiv = document.createElement('div');
     pDiv.id = "file_div_" + fileDialogCount;
     fileDialogCount += 1;
@@ -708,7 +708,7 @@ function renderArrayFileDialog(param, callBacks) {
     pDiv.classList.add('form-group');
 
     // label
-    var paramName = renderUtils.createLabel(param);
+    var paramName = renderUtils.createLabel(param, commandName);
     pDiv.appendChild(createRightDiv(param, callBacks));
     pDiv.appendChild(paramName);
 
@@ -776,7 +776,7 @@ function renderArrayFileDialog(param, callBacks) {
     return pDiv;
 }
 
-function renderFolderDialog(param, callBacks) {
+function renderFolderDialog(param, callBacks, commandName) {
     var pDiv = document.createElement('div');
     pDiv.id = "file_div_" + folderDialogCount;
     folderDialogCount += 1;

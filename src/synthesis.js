@@ -23,13 +23,29 @@ function parseArgs(commandStr) {
         //Get the argv representation and skip the first one
         var argvArr = stringArgv(commandStr);
 
+        // new modifications
+        let subCommandLength = 1;
+        if (commandName in constants.subCommandLength) {
+            subCommandLength = constants.subCommandLength[commandName];
+        }
+        cYAMLObj[constants.yamlStrings.subCommand] = "";
+        let continueSubCommand = true;
+
         for (var i = 1; i < argvArr.length; i++) {
             var arg = argvArr[i];
             // if the arg is present in positional array, add it to params
             if (cObj['_'].indexOf(arg) > -1) {
-                if (i == 1 && utils.subCommandTest(arg)) { // Sub-command
-                    cYAMLObj[constants.yamlStrings.subCommand] = arg;
+                if (i <= subCommandLength && utils.subCommandTest(arg) && continueSubCommand) { // Sub-command
+                    cYAMLObj[constants.yamlStrings.subCommand] += arg + " ";
                     cObj['_'].splice(cObj['_'].indexOf(arg), 1);
+
+                    // Break subcommand 
+                    if(commandName === 'docker'){
+                        if(arg === 'tag' || arg === 'push'){
+                            continueSubCommand = false;
+                        }
+                    }
+
                     continue; // enable this after fixing
                 }
                 //Redirecting terminal output

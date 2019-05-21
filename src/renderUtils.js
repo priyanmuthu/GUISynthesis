@@ -1,4 +1,5 @@
 const utils = require('./utils.js');
+const constants = require('./constants.js');
 
 function createEditButton() {
     var editButton = document.createElement('button');
@@ -79,14 +80,21 @@ function createModal() {
     return { modalDiv: modalDiv, modalBodyDiv: modalBodyDiv, modalFooterDiv: modalFooterDiv, modalID: modalID };
 }
 
-function createLabel(param) {
+function createLabel(param, commandName) {
     var labelDiv = document.createElement('div');
     // labelDiv.classList.add('form-inline');
     var paramName = document.createElement('label');
     // paramName.style.width = '100%';
     paramName.style.display = 'inline-block';
     paramName.style.fontSize = '20px';
-    paramName.insertAdjacentHTML('beforeend', param[constants.yamlStrings.parameterName]);
+    let labelText = param[constants.yamlStrings.parameterName];
+    if (commandName in constants.paramDesc) {
+        let commandDesc = constants.paramDesc[commandName];
+        if(labelText in commandDesc){
+            labelText = commandDesc[labelText];
+        }
+    }
+    paramName.insertAdjacentHTML('beforeend', labelText);
     paramName.setAttribute('contenteditable', true);
     paramName.addEventListener('keyup', (ev) => {
         console.log('parameter name changed to: ', paramName.innerText);

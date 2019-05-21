@@ -36,12 +36,13 @@ $(document).ready(() => {
         addCell();
     });
 
-    // Have at least one cell by default
-    addCell();
-
+    
     // loading history
     loadHistory();
-
+    
+    // Have at least one cell by default
+    addCell();
+    
     //Adding Menu
     addMenu();
 
@@ -242,7 +243,12 @@ function loadHistory() {
         let cStr = commands[i];
         let newState = createNewState(cStr);
         let cName = utils.getCommandName(cStr);
-        addCellToTab(cName, newState);
+        if(constants.enableTab){
+            addCellToTab(cName, newState);
+        }
+        else{
+            addCell(newState);
+        }
     }
 }
 

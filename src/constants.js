@@ -110,6 +110,34 @@ const theme = 'light';
 
 const fontSize = '24px';
 
+const enableTab = true;
+
+const subCommandLength = {
+    git: 1,
+    docker: 2
+}
+
+const dockerParamDesc = {
+    "-t": "Tag",
+    "-a": "All",
+    "--all": "All",
+    "-d": "Detach",
+    "-p": "Publish",
+    "-v": "Volume",
+    "--name": "Container Name"
+}
+
+const gitParamDesc = {
+    '-m': "commit message",
+    '-b': "New Branch Name",
+    '-a': "Add all"
+}
+
+const paramDesc = {
+    'docker': dockerParamDesc,
+    'git': gitParamDesc
+};
+
 module.exports = {
     theme: theme,
     yamlStrings: yamlStrings,
@@ -125,5 +153,8 @@ module.exports = {
     terminalOutput: terminalOutput,
     enableDraggable: enableDraggable,
     trackedFile: trackedFile,
-    enableInteractiveTerminal: enableInteractiveTerminal
+    enableInteractiveTerminal: enableInteractiveTerminal,
+    enableTab: enableTab,
+    subCommandLength: subCommandLength,
+    paramDesc: paramDesc
 };
