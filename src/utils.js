@@ -166,6 +166,10 @@ function subCommandTest(subCommand){
     return /^[a-zA-Z]+$/.test(subCommand);
 }
 
+function getCommandName(commandStr) {
+    return commandStr.split(" ")[0];
+}
+
 module.exports.readFileText = readFileText;
 module.exports.getYAMLObject = getYAMLObject;
 module.exports.getYAMLText = getYAMLText;
@@ -181,3 +185,4 @@ module.exports.RunCommandAsProcessAsync = RunCommandAsProcessAsync;
 module.exports.RunCommandAsProcessSync = RunCommandAsProcessSync;
 module.exports.ExtractManPageInfo = ExtractManPageInfo;
 module.exports.subCommandTest = subCommandTest;
+module.exports.getCommandName = getCommandName;

@@ -1,0 +1,5 @@
+ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy -ss 00:02:20 -t 00:04:00 output.mp4
+ludwig train --data_csv train.csv --model_definition_file model_definition.yaml
+git commit -a -m "commit message"
+git add somefile.txt
+git push

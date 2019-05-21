@@ -39,6 +39,9 @@ $(document).ready(() => {
     // Have at least one cell by default
     addCell();
 
+    // loading history
+    loadHistory();
+
     //Adding Menu
     addMenu();
 
@@ -210,19 +213,37 @@ function addCellToTab(commandName, state = null) {
     tabDiv.appendChild(cellUI);
     cellDict[uid] = newCell;
     $('.selectpicker').selectpicker();
+
+    openTab(getTabID(commandName), getTabButtonID(commandName));
 }
 
 function replaceCell(oldCommandName, cellElement, newCommandName, commandStr) {
     //delete from old tab -> put it to new tab
     deleteCell(cellElement, oldCommandName);
+    let newState = createNewState(commandStr);
+
+    addCellToTab(newCommandName, newState);
+    openTab(getTabID(newCommandName), getTabButtonID(newCommandName));
+}
+
+function createNewState(commandStr) {
     let newState = {}
     newState[constants.stateStrings.cellType] = constants.cellType.command;
     newState[constants.stateStrings.rawText] = commandStr;
     newState[constants.stateStrings.cellInput] = commandStr;
     newState[constants.stateStrings.UIVisible] = true;
+    return newState;
+}
 
-    addCellToTab(newCommandName, newState);
-    openTab(getTabID(newCommandName), getTabButtonID(newCommandName));
+function loadHistory() {
+    let commands = utils.readFileText('./src/history.txt').split('\n');
+    // console.log(commands);
+    for (i = 0; i < commands.length; i++) {
+        let cStr = commands[i];
+        let newState = createNewState(cStr);
+        let cName = utils.getCommandName(cStr);
+        addCellToTab(cName, newState);
+    }
 }
 
 function deleteCell(cellElement, commandName) {
