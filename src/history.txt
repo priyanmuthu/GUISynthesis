@@ -1,5 +1,11 @@
-ffmpeg -i /Users/priyan/UCSD/Research/GUISynthesis/video.mp4 -c copy -ss 00:02:20 -t 00:04:00 output.mp4
-ludwig train --data_csv train.csv --model_definition_file model_definition.yaml
+git clone https://github.com/priyanmuthu/GUISynthesis.git
 git commit -a -m "commit message"
-git add somefile.txt
 git push
+git checkout --track origin/branchname
+git checkout -b branchname
+docker image build -t testnginx .
+docker container run --detach -p 8080:80 -v $(pwd):/usr/share/nginx/html --name mynginx testnginx
+docker container ps
+docker container stop mynginx
+docker container rm mynginx
+docker push kassssc/newnginx

@@ -108,7 +108,7 @@ const enableInteractiveTerminal = true;
 
 const theme = 'light';
 
-const fontSize = '24px';
+const fontSize = '16px';
 
 const enableTab = true;
 

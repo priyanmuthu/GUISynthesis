@@ -9,8 +9,8 @@ class cell {
         this.commandName = commandName;
         this.replaceCell = replaceCell;
         this.cDiv = document.createElement('div');
-        this.cDiv.style.marginTop = '20px';
-        this.cDiv.style.marginBottom = '20px';
+        this.cDiv.style.marginTop = '5px';
+        this.cDiv.style.marginBottom = '5px';
         if (constants.enableDraggable) {
             this.cDiv.classList.add('list-group-item');
             this.cDiv.classList.add('cell-list');
