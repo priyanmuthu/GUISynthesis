@@ -40,8 +40,8 @@ function parseArgs(commandStr) {
                     cObj['_'].splice(cObj['_'].indexOf(arg), 1);
 
                     // Break subcommand 
-                    if(commandName === 'docker'){
-                        if(arg === 'tag' || arg === 'push'){
+                    if (commandName === 'docker') {
+                        if (arg === 'tag' || arg === 'push') {
                             continueSubCommand = false;
                         }
                     }
@@ -349,6 +349,9 @@ function getType(value) {
     const timerPattern = /^([0-9]{2}:){2}([0-9]{2})$/;
     const numberPattern = /^(-?[0-9]*).?([0-9]+)$/;
     if (numberPattern.test(value)) {
+        if (value.indexOf(':') > -1) {
+            return constants.yamlTypes.string;
+        }
         return constants.yamlTypes.number;
     }
     if (filePattern.test(value)) {
