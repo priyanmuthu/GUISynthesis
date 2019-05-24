@@ -1,4 +1,4 @@
-git clone https://github.com/priyanmuthu/GUISynthesis.git
+git clone https://github.com/priyanmuthu/GUISynthesis.git .
 git commit -a -m "commit message"
 git push
 git checkout --track origin/branchname

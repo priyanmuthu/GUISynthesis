@@ -1394,7 +1394,7 @@ function getCommandString(command) {
 function runScript(script) {
     var scriptString = getScriptString(script);
     console.log(scriptString);
-    // require('./terminal.js').runCommand(scriptString);
+    require('./terminal.js').runCommand(scriptString);
 }
 
 function runCommand(command) {

@@ -96,7 +96,8 @@ function initializeTerminal() {
 
   // Init processes
   // ptyProcess.write("export PATH=$PATH:$(pwd)/src\r");
-  // ptyProcess.write("clear\r");
+  ptyProcess.write("cd /Users/priyan/UCSD/cse216us/study1/\r");
+  ptyProcess.write("clear\r");
 }
 
 function toggleCommandStart(start = false) {
