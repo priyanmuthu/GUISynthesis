@@ -20,8 +20,8 @@ $(document).ready(() => {
     // Do everything here
 
     //House keeping
-    $('#topPanel').height('50%');
-    $('#bottomPanel').height('45%');
+    // $('#topPanel').height('50%');
+    // $('#bottomPanel').height('45%');
     $.fn.selectpicker.Constructor.DEFAULTS.template.caret = '';
 
     // Creating the terminal
@@ -29,7 +29,8 @@ $(document).ready(() => {
     terminal.initializeTerminal();
 
     initDynamicResize(terminal);
-    initCollapseUI();
+    // initCollapseUI();
+    // collapsePane();
 
     $("#addCellButton").click(() => {
         // addTab('git');
@@ -50,7 +51,6 @@ $(document).ready(() => {
         showHistory();
     });
 
-    collapsePane();
     var formDiv = document.getElementById('formDiv');
     if (constants.enableDraggable) {
         formDiv.classList.add('list-group');
