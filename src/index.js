@@ -37,13 +37,18 @@ $(document).ready(() => {
         addCell();
     });
 
-    
+
     // loading history
     loadHistory();
-    
+
+    // Tab UI
+    if (!constants.enableTab) {
+        document.getElementById('tabParentDiv').style.height = "0%";
+    }
+
     // Have at least one cell by default
     addCell();
-    
+
     //Adding Menu
     addMenu();
 
@@ -243,10 +248,10 @@ function loadHistory() {
         let cStr = commands[i];
         let newState = createNewState(cStr);
         let cName = utils.getCommandName(cStr);
-        if(constants.enableTab){
+        if (constants.enableTab) {
             addCellToTab(cName, newState);
         }
-        else{
+        else {
             addCell(newState);
         }
     }
@@ -285,6 +290,7 @@ function initDynamicResize(terminal) {
 }
 
 function initCollapseUI() {
+    return;
     $('#panelButton').click(() => {
         toggleCollapsePane();
     });
@@ -297,6 +303,7 @@ function initCollapseUI() {
 }
 
 function collapsePane() {
+    return;
     var bottomPanel = '#bottomPanel';
     var topPanel = '#topPanel';
     var panelButtonIcon = '#panelButtonIcon';
@@ -311,6 +318,7 @@ function collapsePane() {
 }
 
 function uncollapsePane() {
+    return;
     var bottomPanel = '#bottomPanel';
     var topPanel = '#topPanel';
     var panelButtonIcon = '#panelButtonIcon';
@@ -326,6 +334,7 @@ function uncollapsePane() {
 }
 
 function toggleCollapsePane() {
+    return;
     var disp = $('#bottomPanel').css('display');
     if (disp == 'block') {
         collapsePane();
