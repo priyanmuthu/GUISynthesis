@@ -5,6 +5,7 @@ const yamlStrings = {
     'parameterType': 'type',
     'markdown': 'md',
     'parameterName': 'parameter',
+    'parameterDesc': 'parameterDesc',
     'evaluate': 'eval',
     'isinclude': 'isinclude',
     'defaultValue':'default',
@@ -20,7 +21,7 @@ const yamlStrings = {
     'renderObject': 'renderObject',
     'cellType': 'cellType',
     'step': 'step',
-    'manual': 'manual'
+    'manual': 'manual',
 };
 
 const stateStrings = {
@@ -110,7 +111,7 @@ const theme = 'light';
 
 const fontSize = '16px';
 
-const enableTab = true;
+const enableTab = false;
 
 const subCommandLength = {
     git: 1,
@@ -118,19 +119,55 @@ const subCommandLength = {
 }
 
 const dockerParamDesc = {
-    "-t": "Tag",
-    "-a": "All",
-    "--all": "All",
-    "-d": "Detach",
-    "-p": "Publish",
-    "-v": "Volume",
-    "--name": "Container Name"
+    "-t": "tag",
+    "-a": "all",
+    "--all": "all",
+    "-d": "detach",
+    "-p": "publish",
+    "-v": "volume",
+    "--name": "container name",
+    "--detach": "detach"
 }
 
 const gitParamDesc = {
     '-m': "commit message",
-    '-b': "New Branch Name",
-    '-a': "Add all"
+    '-b': "new branch name",
+    '-a': "add all files",
+    "--track": "track branch"
+}
+
+const gitclone = {
+    '2': 'url',
+    '3': 'folder location'
+}
+
+const dockerimagebuild = {
+    '5': 'folder location'
+}
+
+const dockerpush = {
+    '2': 'image name'
+}
+
+const dockercontainerstop = {
+    '3': 'container name'
+}
+
+const dockercontainerremove = {
+    '3': 'image name'
+}
+
+const dockercontainerrun = {
+    '10': 'image name'
+}
+
+const paramPositDesc = {
+    'git clone': gitclone,
+    'docker image build': dockerimagebuild,
+    'docker push': dockerpush,
+    'docker container stop': dockercontainerstop,
+    'docker container rm': dockercontainerremove,
+    'docker container run': dockercontainerrun
 }
 
 const paramDesc = {
@@ -156,5 +193,6 @@ module.exports = {
     enableInteractiveTerminal: enableInteractiveTerminal,
     enableTab: enableTab,
     subCommandLength: subCommandLength,
-    paramDesc: paramDesc
+    paramDesc: paramDesc,
+    paramPositDesc: paramPositDesc
 };

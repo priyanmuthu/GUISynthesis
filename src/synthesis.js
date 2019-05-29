@@ -45,7 +45,11 @@ function parseArgs(commandStr) {
                             continueSubCommand = false;
                         }
                     }
-
+                    else if (commandName === 'git') {
+                        if (arg === 'clone' || arg === 'commit' || arg === 'push' || arg === 'checkout') {
+                            continueSubCommand = false;
+                        }
+                    }
                     continue; // enable this after fixing
                 }
                 //Redirecting terminal output
@@ -60,6 +64,16 @@ function parseArgs(commandStr) {
                 // Positional Argument: add it to the param array
                 var pObj = {};
                 pObj[constants.yamlStrings.parameterName] = "";
+                //desc
+                let comstr = commandName + " " + cYAMLObj[constants.yamlStrings.subCommand];
+                comstr = comstr.trim();
+                console.log('comstr', comstr, i);
+                if (comstr in constants.paramPositDesc) {
+                    if ("" + i in constants.paramPositDesc[comstr]) {
+                        console.log('loooook heeeerreeee', constants.paramPositDesc[comstr][""+i]);
+                        pObj[constants.yamlStrings.parameterDesc] = constants.paramPositDesc[comstr]["" + i];
+                    }
+                }
                 pObj[constants.yamlStrings.parameterType] = getType(arg);
                 pObj[constants.yamlStrings.defaultValue] = arg;
                 pObj[constants.yamlStrings.required] = true;
@@ -228,6 +242,9 @@ function mergeCommandObjects(commandObjectsArr, command) {
                     //convert to dropdown
                     var newParam = {};
                     newParam[constants.yamlStrings.parameterName] = pName;
+                    if (constants.yamlStrings.parameterDesc in pArr[0]) {
+                      newParam[constants.yamlStrings.parameterDesc] = pArr[0][constants.yamlStrings.parameterDesc];  
+                    }
                     newParam[constants.yamlStrings.parameterType] = constants.yamlTypes.dropdown;
                     var valArr = pArr.map(p => p[constants.yamlStrings.defaultValue]);
                     valArr = [...new Set(valArr)];
@@ -355,10 +372,10 @@ function getType(value) {
         return constants.yamlTypes.number;
     }
     if (filePattern.test(value)) {
-        return constants.yamlTypes.file;
+        return constants.yamlTypes.string;
     }
     if (folderPattern.test(value)) {
-        return constants.yamlTypes.folder;
+        return constants.yamlTypes.string;
     }
     if (timerPattern.test(value)) {
         return constants.yamlTypes.time;

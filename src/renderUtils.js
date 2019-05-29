@@ -87,11 +87,17 @@ function createLabel(param, commandName) {
     // paramName.style.width = '100%';
     paramName.style.display = 'inline-block';
     paramName.style.fontSize = '20px';
+    console.log('herrrrreeeeee', param);
     let labelText = param[constants.yamlStrings.parameterName];
-    if (commandName in constants.paramDesc) {
-        let commandDesc = constants.paramDesc[commandName];
-        if(labelText in commandDesc){
-            labelText = commandDesc[labelText];
+    if(constants.yamlStrings.parameterDesc in param){
+        labelText = param[constants.yamlStrings.parameterDesc];
+    }
+    else{
+        if (commandName in constants.paramDesc) {
+            let commandDesc = constants.paramDesc[commandName];
+            if(labelText in commandDesc){
+                labelText = commandDesc[labelText];
+            }
         }
     }
     paramName.insertAdjacentHTML('beforeend', labelText);

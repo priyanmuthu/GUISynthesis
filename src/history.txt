@@ -1,11 +1,11 @@
-git clone https://github.com/priyanmuthu/GUISynthesis.git .
-git commit -a -m "commit message"
-git push
+git clone https://github.com/kassssc/CSE216-experiment.git .
 git checkout --track origin/branchname
 git checkout -b branchname
 docker image build -t testnginx .
-docker container run --detach -p 8080:80 -v $(pwd):/usr/share/nginx/html --name mynginx testnginx
+docker container run --detach -p 3000:1080 -v /Users/priyan/source:/usr/share/destination --name new_name image_name
 docker container ps
-docker container stop mynginx
-docker container rm mynginx
-docker push kassssc/newnginx
+docker push kassssc/new_image_name
+git commit -a -m "commit message"
+git push
+docker container stop new_name
+docker container rm cont_name
