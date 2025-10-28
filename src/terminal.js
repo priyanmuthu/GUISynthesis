@@ -1,8 +1,8 @@
 function initializeTerminal() {
   const os = require('os');
   const pty = require('node-pty');
-  const Terminal = require('xterm');
-  const fit = require("../node_modules/xterm/lib/addons/fit/fit");
+  const { Terminal } = require('xterm');
+  const { FitAddon } = require('xterm-addon-fit');
   const synthesis = require('./synthesis.js');
   const editor = require('./editor.js');
   const express = require('express');
@@ -35,10 +35,11 @@ function initializeTerminal() {
     env: process.env
   });
   // Initialize xterm.js and attach it to the DOM
-  Terminal.Terminal.applyAddon(fit);
-  const xterm = new Terminal.Terminal();
+  const fitAddon = new FitAddon();
+  const xterm = new Terminal();
+  xterm.loadAddon(fitAddon);
   xterm.open(document.getElementById('xterm'));
-  xterm.setOption('theme', { background: '#282828' });
+  xterm.options.theme = { background: '#282828' };
   fitTerminal();
 
   // Setup communication between xterm.js and node-pty
@@ -56,7 +57,7 @@ function initializeTerminal() {
   });
 
   function fitTerminal() {
-    xterm.fit();
+    fitAddon.fit();
     ptyProcess.resize(xterm.cols, xterm.rows);
   }
 

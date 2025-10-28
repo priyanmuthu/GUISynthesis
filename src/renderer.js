@@ -16,8 +16,8 @@ const constants = require('./constants.js');
 const showdown = require('showdown');
 let mdConverter = new showdown.Converter();
 const Awesomplete = require('awesomplete');
-const { dialog } = require('electron').remote;
-const remote = require('electron').remote;
+const { dialog } = require('@electron/remote');
+const remote = require('@electron/remote');
 const path = require('path');
 const fs = require('fs');
 const editor = require('./editor.js');
@@ -651,12 +651,11 @@ function renderFileDialog(param) {
         properties: ['openFile']
     }
 
-    fButton.addEventListener('click', () => {
-        dialog.showOpenDialog(options, (files) => {
-            if (files != undefined) {
-                paramEdit.value = files[0];
-            }
-        });
+    fButton.addEventListener('click', async () => {
+        const result = await dialog.showOpenDialog(options);
+        if (!result.canceled && result.filePaths.length > 0) {
+            paramEdit.value = result.filePaths[0];
+        }
     });
 
     vButton.addEventListener('click', () => {
@@ -746,17 +745,16 @@ function showTextFiles(filePath, holderDiv, fileLang) {
     }
     var editorObj = editor.InitializeEditor(editorDiv, filePath, fileLang, onContentChange);
 
-    $('#' + modalRes.modalID).on('hide.bs.modal', () => {
+    $('#' + modalRes.modalID).on('hide.bs.modal', async () => {
         console.log('hide called', didContentChange);
         // if content changed: ask to save
         if (didContentChange) {
             const options = { type: 'info', buttons: ['Save', 'Cancel'], message: 'Save Changes?' };
-            dialog.showMessageBox(null, options, (res, checked) => {
-                console.log('res');
-                if (res == 0) {
-                    fs.writeFileSync(filePath, editorObj.getText());
-                }
-            });
+            const result = await dialog.showMessageBox(null, options);
+            console.log('res', result.response);
+            if (result.response == 0) {
+                fs.writeFileSync(filePath, editorObj.getText());
+            }
         }
     });
 
@@ -879,12 +877,11 @@ function renderArrayFileDialog(param) {
         properties: ['openFile', 'multiSelections']
     }
 
-    fButton.addEventListener('click', () => {
-        dialog.showOpenDialog(options, (files) => {
-            if (files != undefined) {
-                paramEdit.value = files.join(', ');
-            }
-        });
+    fButton.addEventListener('click', async () => {
+        const result = await dialog.showOpenDialog(options);
+        if (!result.canceled && result.filePaths.length > 0) {
+            paramEdit.value = result.filePaths.join(', ');
+        }
     });
 
     param[constants.yamlStrings.evaluate] = function () {
@@ -948,12 +945,11 @@ function renderFolderDialog(param) {
         properties: ['openDirectory']
     }
 
-    fButton.addEventListener('click', () => {
-        dialog.showOpenDialog(options, (files) => {
-            if (files != undefined) {
-                paramEdit.value = files[0];
-            }
-        });
+    fButton.addEventListener('click', async () => {
+        const result = await dialog.showOpenDialog(options);
+        if (!result.canceled && result.filePaths.length > 0) {
+            paramEdit.value = result.filePaths[0];
+        }
     })
 
     param['eval'] = function () {

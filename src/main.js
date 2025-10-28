@@ -1,15 +1,33 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+// Enable @electron/remote
+require('@electron/remote/main').initialize()
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
 function createWindow () {
   // Create the browser window.
-  let {swidth, sheight} = require('electron').screen.getPrimaryDisplay().size
+  let {width: swidth, height: sheight} = require('electron').screen.getPrimaryDisplay().size
   // win = new BrowserWindow({ width: 1000, height: 700, show: false, webPreferences: {experimentalFeatures: true}, minWidth: 1000, minHeight:700, titleBarStyle: "hidden" })
-  win = new BrowserWindow({ width: 1000, height: 700, show: false, webPreferences: {experimentalFeatures: true}, minWidth: 1000, minHeight:700 })
+  win = new BrowserWindow({
+    width: 1000,
+    height: 700,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+    },
+    minWidth: 1000,
+    minHeight:700
+  })
+
+  // Enable remote module for this window
+  require('@electron/remote/main').enable(win.webContents)
+
   win.maximize();
   win.show();
   // and load the index.html of the app.
