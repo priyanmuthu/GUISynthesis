@@ -1,8 +1,8 @@
 function initializeTerminal() {
   const os = require('os');
   const pty = require('node-pty');
-  const { Terminal } = require('xterm');
-  const { FitAddon } = require('xterm-addon-fit');
+  const { Terminal } = require('@xterm/xterm');
+  const { FitAddon } = require('@xterm/addon-fit');
   const synthesis = require('./synthesis.js');
   const editor = require('./editor.js');
   const express = require('express');
